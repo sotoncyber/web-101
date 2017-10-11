@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SUCSS Web 01</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <div class="container">
+        <h3>Browser Page Inspector</h3>
+        <ul>
+            <li><a href="/1">Challenge 1</a></li>
+            <li><a href="/2">Challenge 2</a></li>
+        </ul>
+
+        <h3>Browser Console</h3>
+        <ul>
+            <li><a href="/3">Challenge 3</a></li>
+            <li><a href="/4">Challenge 4</a></li>
+        </ul>
+
+        <h3>Using a Web Proxy (Burp Suite)</h3>
+        <ul>
+            <li><a href="/5">Challenge 5</a></li>
+            <li><a href="/6">Challenge 6</a></li>
+            <li><a href="/7">Challenge 7</a></li>
+            <li><a href="/8">Challenge 8</a></li>
+            <li><a href="/9">Challenge 9</a> - You might need <a href="{{ url_for('static', filename='user_wordlist.txt') }}">this</a> and <a href="{{ url_for('static', filename='password_wordlist.txt') }}">this</a>...</li>
+        </ul>
+
+        <h3>Using DirBuster for Enumeration</h3>
+        <ul>
+            <li><a href="/10">Challenge 10</a></li>
+        </ul>
+
+        <h3>Template Injection</h3>
+        <ul>
+            <li><a href="/11">Challenge 11</a></li>
+        </ul>
+    </div>
+</body>
+</html>

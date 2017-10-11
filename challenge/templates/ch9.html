@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post">
+        <label>Username:</label><br />
+        {{ form.username }}
+        {% for error in form.username.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        <br />
+
+        <label>Password:</label><br />
+        {{ form.password }}
+        {% for error in form.password.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+
+        <button type="submit">Login!</button>
+        {% if baduser == True %}
+            <div class="invalid-feedback">That username does not exist, please try again.</div>
+        {% endif %}
+        {% if badpass == True %}
+            <div class="invalid-feedback">That password is not correct, please try again.</div>
+        {% endif %}
+    </form>
+{% endblock %}

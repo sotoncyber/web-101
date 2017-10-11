@@ -1,0 +1,26 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post">
+        <label>Username:</label><br />
+        {{ form.username }}
+        {% for error in form.username.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        <br />
+
+        <label>Password:</label><br />
+        {{ form.password }}
+        {% for error in form.password.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+
+        <button type="submit">Login!</button>
+    </form>
+    <script>
+        function login_details() {
+            return "VXNlcjogdGVzdCB8IFBhc3N3b3JkOiAjbjB0cDQ1NXcwcmQK"
+        }
+    </script>
+{% endblock %}

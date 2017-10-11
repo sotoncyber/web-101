@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <h2>Welcome, {{ user }}</h2>
+    {% if user == 'admin' %}
+        <p>You're an admin! That means you have super high privileges!</p>
+        <p>I think you deserve a flag for that... <b>{{ flag }}</b></p>
+        <p>Head over to the <a href="/9">next level</a>.</p>
+    {% else %}
+        <p>You're only a lowly user so you have very basic access.</p>
+        <p>To get more priviledged access (and more importantly the flag) you'll need to authenticate as an admin instead.</p>
+    {% endif %}
+        <p>Want to  <a href="/8/logout">logout</a>?</p>
+{% endblock %}

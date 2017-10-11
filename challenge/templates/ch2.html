@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post">
+        <label>Username:</label><br />
+        {{ form.username(disabled=True) }}
+        {% for error in form.username.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        <br />
+
+        <label>Password:</label><br />
+        {{ form.password(disabled=True) }}
+        {% for error in form.password.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+
+        <button style="visibility: hidden" type="submit">Login!</button>
+    </form>
+    <!-- Just in case I forget my password, I can find it again: d0ntgu355m3! ~Webmaster -->
+{% endblock %}

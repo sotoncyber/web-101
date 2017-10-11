@@ -1,0 +1,8 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <h2>Flag: {{ flag }}</h2>
+    <p>Awesome, you passed level {{ current }}!</p>
+    <p>Don't forget to submit your flag to <a href="http://flags.sucss.org">the flag tracker</a>.</p>
+    <p>Head over to the <a href="/{{ next }}">next level</a>.</p>
+{% endblock %}
