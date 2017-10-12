@@ -74,11 +74,13 @@ See flag from admin login page sent back to user in response window.
 ### Skill ###
 Using Burp intruder to brute force logins using a wordlist of users and a wordlist of passwords.
 
-### Solutions ###
-Use wordlists provided at `challenge/files/`.
+### Solution ###
+Use wordlists provided on the challenges list page.
 First perform attack on usernames looking for a change in error - `user_wordlist.txt`.
 Second put found username into username location and change attack to password field, again looking for error change - `password_wordlist.txt`.
 Put in correct user and password into form and flag is show.
 
 
-
+## Challenge 10 ##
+### Skill ###
+Using `dirb` to enumerate file and directories on a webserver.
