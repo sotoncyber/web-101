@@ -69,11 +69,11 @@ def ch_5():
 def ch_6():
     form = forms.LoginForm()
     invalid = False
+    if (flask.request.cookies.get('access-level') is not None) and (flask.request.cookies.get('access-level').lower() == 'admin'):
+        r = flask.make_response(flask.render_template('success.html', current=6, next=7, flag='flag6'))
+        r.set_cookie('access-level', expires=0)
+        return r
     if flask.request.method == 'POST':
-        if flask.request.cookies.get('access-level') == 'admin':
-            r = flask.make_response(flask.render_template('success.html', current=6, next=7, flag='flag6'))
-            r.set_cookie('access-level', expires=0)
-            return r
         invalid = True
     r = flask.make_response(flask.render_template('login.html', lvl=6, form=form, invalid=invalid))
     r.set_cookie('access-level', 'user')
@@ -92,6 +92,7 @@ def ch_7():
         else:
             invalid = True
     r = flask.make_response(flask.render_template('login.html', lvl=7, form=form, invalid=invalid))
+    r.set_cookie('access-level', expires=0) # If any cookies left from past challenges, clear them
     r.set_cookie('super-secret-cookie', 'VXNlcjogYmFuay1tYW5hZ2VyIHwgUGFzc3dvcmQ6IGlsb3ZlbW9uZXkhCg==')
     return r
 
@@ -99,25 +100,31 @@ def ch_7():
 @app.route('/8', methods=['GET', 'POST'])
 def ch_8():
     form = forms.LoginForm()
-    if flask.request.method == 'POST':
+    # Check cookies
+    if flask.request.cookies.get('session-cookie') and base64.b64decode(flask.request.cookies.get('session-cookie')).decode('ascii').lower().endswith('-username:admin'):
+        r = flask.make_response(flask.render_template('ch8.html', user='admin', flag='flag8'))
+        r.set_cookie('session-cookie', expires=0)
+        return r
+    elif flask.request.cookies.get('session-cookie') and base64.b64decode(flask.request.cookies.get('session-cookie')).decode('ascii').lower().endswith('-username:user'):
+        return flask.render_template('ch8.html', user='user')
+    # Check POST data
+    elif flask.request.method == 'POST':
         if form.username.data.lower() == 'user' and form.password.data == 'password':
             r = flask.make_response(flask.render_template('ch8.html', user='user'))
+            r.set_cookie('access-level', expires=0) # If any cookies left from past challenges, clear them
+            r.set_cookie('super-secret-cookie', expires=0) # If any cookies left from past challenges, clear them
             r.set_cookie('session-cookie', base64.b64encode((str(datetime.datetime.now()).replace(' ', '') + '-username:user').encode('ascii')).decode('ascii'))
             return r
         else:
             return flask.render_template('ch8-login.html', lvl=8, form=form, invalid=True)
-    if flask.request.cookies.get('session-cookie') and base64.b64decode(flask.request.cookies.get('session-cookie')).decode('ascii').endswith('-username:admin'):
-        r = flask.make_response(flask.render_template('ch8.html', user='admin', flag='flag8'))
-        r.set_cookie('session-cookie', expires=0)
-        return r
-    elif flask.request.cookies.get('session-cookie') and base64.b64decode(flask.request.cookies.get('session-cookie')).decode('ascii').endswith('-username:user'):
-        return flask.render_template('ch8.html', user='user')
     else:
         return flask.render_template('ch8-login.html', lvl=8, form=form, invalid=False)
 
 @app.route('/8/logout')
 def ch_8_logout():
     r = flask.make_response(flask.redirect('/8', code=302))
+    r.set_cookie('access-level', expires=0)  # If any cookies left from past challenges, clear them
+    r.set_cookie('super-secret-cookie', expires=0)  # If any cookies left from past challenges, clear them
     r.set_cookie('session-cookie', expires=0)
     return r
 
@@ -145,7 +152,7 @@ def ch_10():
 
 @app.route('/10/panel')
 def ch_10_panel():
-    return flask.render_template('ch10-part1.html', current=10, next=11, flag='flag10')
+    return flask.render_template('ch10-part1.html', current=10, next=11, flag='65d002f3-f836-4629-9c35-be6db9341333')
 
 @app.route('/10/panel/details.pdf')
 def ch_10_pdf():
